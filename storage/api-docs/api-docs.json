@@ -1,0 +1,831 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação - Desafio Backend",
+        "version": "7.30.4"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api"
+        }
+    ],
+    "paths": {
+        "/transactions": {
+            "get": {
+                "tags": [
+                    "Movimentações"
+                ],
+                "summary": "Listar todas as movimentações",
+                "description": "Lista completa de movimentações paginada",
+                "operationId": "App\\Http\\Controllers\\Api\\TransactionController::index",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Movimentações"
+                ],
+                "summary": "Cadastrar movimentação",
+                "description": "Cadastrar movimentações na base de dados",
+                "operationId": "storeTransaction",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTransactionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sucesso no cadastro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "406": {
+                        "description": "Informações inválidas"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/transactions/id/{id}": {
+            "get": {
+                "tags": [
+                    "Movimentações"
+                ],
+                "summary": "Listar dados de movimentação",
+                "description": "Retornar dados de uma única movimentação",
+                "operationId": "geTransactionById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código da movimentação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        },
+        "/transactions/{id}": {
+            "delete": {
+                "tags": [
+                    "Movimentações"
+                ],
+                "summary": "Excluir uma movimentação existente",
+                "description": "Excluir um registro de movimentação",
+                "operationId": "deletTransaction",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código da movimentação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Sucesso na exclusão"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Listar todos os usuários",
+                "description": "Lista completa de usuários paginada",
+                "operationId": "App\\Http\\Controllers\\Api\\UserController::index",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Alterar saldo inicial usuário",
+                "description": "Alterar saldo inicial de usuários",
+                "operationId": "updateUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na alteração",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Cadastrar usuário",
+                "description": "Cadastrar usuários",
+                "operationId": "storeUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sucesso no cadastro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "406": {
+                        "description": "Informações inválidas"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/id/{id}": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Listar dados de usuário",
+                "description": "Retornar dados de um único usuário",
+                "operationId": "geUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "delete": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Excluir um usuário existente",
+                "description": "Excluir um registro de usuário",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Sucesso na exclusão"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        },
+        "/users/extract/{id}": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Extrato de usuário com dados do cadastro e suas movimentações",
+                "description": "Retornar dados de um único usuário com todas as suas movimentações",
+                "operationId": "geUserExtractById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserExtract"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        },
+        "/users/balance/{id}": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Saldo fiancneiro final de usuário",
+                "description": "Saldo fiancneiro final de usuário",
+                "operationId": "geUserBalanceById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Código do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na consulta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBalance"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro desconhecido"
+                    },
+                    "401": {
+                        "description": "Sem autorização"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
+                    },
+                    "500": {
+                        "description": "Erro interno"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Transaction": {
+                "title": "Movimentações",
+                "description": "Modelo de Movimentações",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Cõdigo do movimento",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "title": "ID do Usuário",
+                        "description": "Cõdigo do usuário proprietário do movimento",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "date_transaction": {
+                        "title": "Data de movimentação",
+                        "description": "Data de movimentação",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-01-18"
+                    },
+                    "description": {
+                        "title": "Descrição",
+                        "description": "Descrição do lançamento",
+                        "type": "string",
+                        "example": "Pagamento de conta de telefone"
+                    },
+                    "fl_operation": {
+                        "title": "Operação",
+                        "description": "Informa se é uma operação de Débito (0) ou Crédito (1)",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "fl_reversal": {
+                        "title": "Indicador de estorno",
+                        "description": "Informa se é uma operação de estorno, onde, 0 indica movimento normal, e 1 indica movimento de estorno",
+                        "type": "integer",
+                        "example": "0"
+                    },
+                    "value": {
+                        "title": "Valor",
+                        "description": "Valor absoluto da movimentação. Não informar valor negativo",
+                        "type": "number"
+                    },
+                    "transaction_id": {
+                        "title": "Código de transação original",
+                        "description": "Código da transação original que está sendo estornada",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "created_at": {
+                        "title": "Data de cadastro",
+                        "description": "Data de cadastro do registro",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Data de alteração",
+                        "description": "Data de alteração do registro",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Transaction"
+                }
+            },
+            "User": {
+                "title": "Usuário",
+                "description": "Modelo de Usuário",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Cõdigo do usuário",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Nome",
+                        "description": "Nome do usuário",
+                        "type": "string",
+                        "example": "Rodrigo Taquete"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email de login do usuário",
+                        "type": "string",
+                        "example": "rodrigo@taquete.com.br"
+                    },
+                    "birthday": {
+                        "title": "Data de nascimento",
+                        "description": "Data de nascimento do usuário",
+                        "type": "string",
+                        "format": "date",
+                        "example": "1982-01-18"
+                    },
+                    "opening_balance": {
+                        "title": "Saldo Inicial",
+                        "description": "Valor do saldo inicial do usuário",
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "title": "Data de cadastro",
+                        "description": "Data de cadastro do registro",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Data de alteração",
+                        "description": "Data de alteração do registro",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserBalance": {
+                "title": "Saldo final de Usuário",
+                "description": "Modelo de Saldo de Usuário",
+                "properties": {
+                    "balance": {
+                        "title": "Saldo Final",
+                        "description": "Valor do saldo final do usuário",
+                        "type": "number"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserExtract": {
+                "title": "Extrato de Usuário",
+                "description": "Modelo de Extrato de Usuário",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Cõdigo do usuário",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Nome",
+                        "description": "Nome do usuário",
+                        "type": "string",
+                        "example": "Rodrigo Taquete"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email de login do usuário",
+                        "type": "string",
+                        "example": "rodrigo@taquete.com.br"
+                    },
+                    "birthday": {
+                        "title": "Data de nascimento",
+                        "description": "Data de nascimento do usuário",
+                        "type": "date",
+                        "format": "date",
+                        "example": "1982-01-18"
+                    },
+                    "opening_balance": {
+                        "title": "Saldo Inicial",
+                        "description": "Valor do saldo inicial do usuário",
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "title": "Data de cadastro",
+                        "description": "Data de cadastro do registro",
+                        "type": "date",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Data de alteração",
+                        "description": "Data de alteração do registro",
+                        "type": "date",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "transactions": {
+                        "title": "Movimentações do usuário",
+                        "description": "Movimentações do usuário paginadas",
+                        "type": "string",
+                        "example": {
+                            "id": 1,
+                            "user_id": 1,
+                            "date_transaction": "2021-01-18",
+                            "description": "Pagamento de conta de telefone",
+                            "fl_reversal": 0,
+                            "fl_operation": 1,
+                            "value": 0,
+                            "transaction_id": 123,
+                            "created_at": "2020-01-27 17:50:45",
+                            "updated_at": "2020-01-27 17:50:45"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "StoreTransactionRequest": {
+                "title": "Solicitação de cadastro da movimentação",
+                "description": "Armazenar dados do corpo da solicitação da movimentação",
+                "required": [
+                    "user_id",
+                    "date_transaction",
+                    "description",
+                    "fl_operation",
+                    "fl_reversal",
+                    "value"
+                ],
+                "properties": {
+                    "user_id": {
+                        "title": "ID do Usuário",
+                        "description": "Cõdigo do usuário proprietário do movimento",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "date_transaction": {
+                        "title": "Data de movimentação",
+                        "description": "Data de movimentação",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-01-18"
+                    },
+                    "description": {
+                        "title": "Descrição",
+                        "description": "Descrição do lançamento",
+                        "type": "string"
+                    },
+                    "fl_operation": {
+                        "title": "Operação",
+                        "description": "Informa se é uma operação de Débito (0) ou Crédito (1)",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "fl_reversal": {
+                        "title": "Indicador de estorno",
+                        "description": "Informa se é uma operação de estorno, onde, 0 indica movimento normal, e 1 indica movimento de estorno",
+                        "type": "integer",
+                        "example": "0"
+                    },
+                    "value": {
+                        "title": "Valor",
+                        "description": "Valor absoluto da movimentação. Não informar valor negativo",
+                        "type": "number"
+                    },
+                    "transaction_id": {
+                        "title": "Código de transação original",
+                        "description": "Código da transação original que está sendo estornada",
+                        "type": "integer",
+                        "example": "123"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreUserRequest": {
+                "title": "Solicitação de cadastro de usuário",
+                "description": "Armazenar dados do corpo da solicitação de usuário",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Nome",
+                        "description": "Nome do usuário",
+                        "type": "string",
+                        "example": "Rodrigo Taquete"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email de login do usuário",
+                        "type": "string",
+                        "example": "rodrigo@taquete.com.br"
+                    },
+                    "password": {
+                        "title": "Senha",
+                        "description": "Senha de login do usuário",
+                        "type": "string"
+                    },
+                    "birthday": {
+                        "title": "Data de nascimento",
+                        "description": "Data de nascimento do usuário",
+                        "type": "string",
+                        "format": "date",
+                        "example": "1982-01-18"
+                    },
+                    "opening_balance": {
+                        "title": "Saldo Inicial",
+                        "description": "Valor do saldo inicial do usuário",
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateUserRequest": {
+                "title": "Solicitação de alteração de saldo inicial de usuário",
+                "description": "Alterar dados do corpo da solicitação de usuário",
+                "required": [
+                    "id",
+                    "opening_balance"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Código do usuário",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "opening_balance": {
+                        "title": "Saldo Inicial",
+                        "description": "Valor do saldo inicial do usuário",
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
