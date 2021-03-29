@@ -28,10 +28,6 @@ A url padrão da documentação da API é:
 - Etapa 3
   - No endpoint que exporta o arquivo CSV criar um cabeçalho com os dados do cliente e o seu saldo atual;
 
-## Git
-Infelizmente, foi a primeira vez que trabalhei com Fork, e acabei me atrapalhando, por isso, apenas 1 commit com todas as funcionalidades prontas.
-
-
 ## Conclusão
 Foi um grande prazer e um grande desafio aprender oportunidade de estudar o Swagger para essa apresentação.
 
